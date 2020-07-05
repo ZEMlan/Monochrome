@@ -1,8 +1,9 @@
 # Monochrome
-Minimalistic tool for colour picking.
+Minimalistic tool for colour picking. <p>
+<kbd> <img src="/readme/mono.jpg" width="200" height="400"> </kbd> <kbd><img src="/readme/chrome.jpg" width="200" height="400"></kbd>
 
 ## Build with:
-Love + MVVM + Data Binding (one&two ways) + LiveData + Room (coming soon) 
+:black_heart: + MVVM + Data Binding (one&two ways) + LiveData + Room (coming soon) 
 
 Colour picking view by [danielnilsson9](https://github.com/danielnilsson9/color-picker-view)
 
