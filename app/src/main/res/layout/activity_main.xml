@@ -9,79 +9,98 @@
             type="ru.zemlyanaya.monochrome.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <com.github.danielnilsson9.colorpickerview.view.ColorPickerView
-            android:id="@+id/colourPickerView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="@{viewmodel.mono ? View.INVISIBLE : View.VISIBLE}"
-            app:alphaChannelVisible="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textColour" />
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-        <com.github.danielnilsson9.colorpickerview.view.ColorPanelView
-            android:id="@+id/colourPanel"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="4dp"
-            android:visibility="@{viewmodel.mono ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/colourPickerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textColour" />
+            <com.github.danielnilsson9.colorpickerview.view.ColorPickerView
+                android:id="@+id/colourPickerView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="@{viewmodel.mono ? View.INVISIBLE : View.VISIBLE}"
+                app:alphaChannelVisible="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textColour" />
 
-        <EditText
-            android:id="@+id/textColour"
-            style="@android:style/Widget.Material.EditText"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="72dp"
-            android:layout_marginEnd="128dp"
-            android:backgroundTint="@color/black"
-            android:ems="10"
-            android:fontFamily="@font/roboto_mono"
-            android:inputType="textShortMessage"
-            android:textColor="@color/black"
-            android:textColorHighlight="@color/grey"
-            android:textColorHint="@color/black"
-            android:textColorLink="@color/black"
-            android:textSize="20sp"
+            <com.github.danielnilsson9.colorpickerview.view.ColorPanelView
+                android:id="@+id/colourPanel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="4dp"
+                android:visibility="@{viewmodel.mono ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/colourPickerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textColour" />
 
-            app:layout_constraintEnd_toEndOf="@+id/colourPickerView"
-            app:layout_constraintStart_toStartOf="@+id/colourPickerView"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/textColour"
+                style="@android:style/Widget.Material.EditText"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="72dp"
+                android:layout_marginEnd="128dp"
+                android:backgroundTint="@color/black"
+                android:ems="10"
+                android:fontFamily="@font/roboto_mono"
+                android:inputType="textShortMessage"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/grey"
+                android:textColorHint="@color/black"
+                android:textColorLink="@color/black"
+                android:textSize="20sp"
 
-        <Button
-            android:id="@+id/butMonochrome"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+                app:layout_constraintEnd_toEndOf="@+id/colourPickerView"
+                app:layout_constraintStart_toStartOf="@+id/colourPickerView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/butMonochrome"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/roboto_mono"
+                android:onClick="@{() -> viewmodel.onMonochrome()}"
+                android:text="@{viewmodel.monochrome}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/colourPickerView"
+                app:layout_constraintTop_toTopOf="@+id/textColour"
+                app:rippleColor="@color/grey" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/bottomSheet"
+            layout="@layout/favourites_sheet" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            android:fontFamily="@font/roboto_mono"
-            android:onClick="@{() -> viewmodel.onMonochrome()}"
-            android:text="@{viewmodel.monochrome}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/colourPickerView"
-            app:layout_constraintTop_toTopOf="@+id/textColour"
-            app:rippleColor="@color/grey" />
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_star"
+            app:backgroundTint="@color/black"
+            android:layout_margin="16dp"
+            app:layout_anchor="@+id/bottomSheet"
+            app:layout_anchorGravity="top|end" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

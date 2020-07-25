@@ -5,11 +5,41 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.zemlyanaya.monochrome.database.Repository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import ru.zemlyanaya.monochrome.database.AppDatabase
+import ru.zemlyanaya.monochrome.database.Colour
+import kotlin.coroutines.CoroutineContext
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { Repository.getInstance(PreferenceManager.getDefaultSharedPreferences(application))  }
+    private val repository by lazy {
+        Repository.getInstance(
+            PreferenceManager.getDefaultSharedPreferences(application),
+            AppDatabase.getDatabase(application.applicationContext).colourDao()
+        )
+    }
+
+    private val parentJob = Job()
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Default
+    private val scope = CoroutineScope(coroutineContext)
+
+    val colours = repository.allColours
+
+    fun insert(colour: Colour) = scope.launch {
+        repository.insert(colour)
+    }
+
+    fun delete(colour: Colour) = scope.launch {
+        repository.delete(colour)
+    }
+
+    fun edit(oldKey: Int, newName: String) = scope.launch {
+        repository.edit(oldKey, newName)
+    }
 
     private val _colour = MutableLiveData(repository.getLastColour())
     private val _monochrome = MutableLiveData("Mono")
