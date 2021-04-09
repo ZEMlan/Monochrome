@@ -1,4 +1,9 @@
-package ru.zemlyanaya.monochrome
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.danielnilsson9.colorpickerview.view.ColorPanelView
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.android.synthetic.main.item_colour.view.*
-import ru.zemlyanaya.monochrome.database.Colour
+import ru.zzenstudio.monochrome.database.Colour
 
 class FavColoursRecyclerAdapter constructor(private val onColourClick: (Colour) -> Unit,
                                             private val colours: List<Colour>):

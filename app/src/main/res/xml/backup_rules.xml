@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+  ~  * Copyright (c) 2021 . All rights reserved.
+  -->
+
+<full-backup-content>
+    <include domain="database" path="MonochromeFavs.xml"/>
+</full-backup-content>

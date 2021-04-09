@@ -1,4 +1,9 @@
-package ru.zemlyanaya.monochrome
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome
 
 import android.content.Context
 import android.graphics.Canvas

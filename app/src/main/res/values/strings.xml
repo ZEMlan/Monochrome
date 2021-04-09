@@ -1,6 +1,19 @@
+<!--
+  ~ Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+  ~  * Copyright (c) 2021 . All rights reserved.
+  -->
+
 <resources>
     <string name="app_name">Monochrome</string>
     <string name="mono">Mono</string>
     <string name="chrome">Chrome</string>
     <string name="error">Invalid colour code.</string>
+    <string name="copied">Copied to clipboard.</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="colour_deleted">Colour was deleted from favourites.</string>
+    <string name="fill_fields">Fill in all the field.</string>
+    <string name="name">Name</string>
 </resources>

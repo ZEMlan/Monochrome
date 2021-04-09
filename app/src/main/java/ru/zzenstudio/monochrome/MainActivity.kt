@@ -1,4 +1,9 @@
-package ru.zemlyanaya.monochrome
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome
 
 import android.app.Activity
 import android.content.ClipData
@@ -13,9 +18,7 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -25,8 +28,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import ru.zemlyanaya.monochrome.database.Colour
-import ru.zemlyanaya.monochrome.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.favourites_sheet.view.*
+import ru.zzenstudio.monochrome.database.Colour
+import ru.zzenstudio.monochrome.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -62,35 +66,34 @@ class MainActivity : AppCompatActivity() {
            )
             it.clearFocus()
 
-           Toast.makeText(this, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
+           Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
         }
         binding.textColour.filters = arrayOf<InputFilter>(LengthFilter(9))
-        binding.textColour.doAfterTextChanged {
-            val colour = parseColorString(it.toString())
+        binding.textColour.setOnEditorActionListener { v, _, _ ->
+            val colour = parseColorString(v.text.toString())
             if(binding.colourPickerView.color != colour)
                 binding.colourPickerView.setColor(colour, true)
+
+            return@setOnEditorActionListener true
         }
 
-        binding.colourPickerView.setColor(viewModel.colour.value!!, true)
-        binding.colourPickerView.setOnColorChangedListener {
-            viewModel.setNewColour(binding.colourPickerView.color)
-            if(binding.textColour.hasFocus()){
-                hideKeyboard()
-                binding.textColour.clearFocus()
+        binding.colourPickerView.apply {
+            setColor(viewModel.colour.value!!, true)
+            setOnColorChangedListener {
+                viewModel.setNewColour(binding.colourPickerView.color)
             }
         }
 
         val sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
         sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if(newState == BottomSheetBehavior.STATE_EXPANDED)
-                    sheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
                 if(newState == BottomSheetBehavior.STATE_HIDDEN
                     || newState == BottomSheetBehavior.STATE_COLLAPSED)
                     binding.fab.setImageResource(R.drawable.ic_star)
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
             }
         })
 
@@ -116,15 +119,14 @@ class MainActivity : AppCompatActivity() {
         enableSwipeToEditAndUndo()
 
 
-        viewModel.colour.observe(this, Observer<Int> {
+        viewModel.colour.observe(this, {
             binding.colourPanel.color = it
             binding.textColour.setText(getHex(it))
         })
-        viewModel.colours.observe(this, Observer {
+        viewModel.colours.observe(this, {
                 list -> binding.bottomSheet.recyclerView.adapter =
             FavColoursRecyclerAdapter({onColourClick(it)}, list.orEmpty())
         })
-
     }
 
     private fun enableSwipeToEditAndUndo() {
@@ -166,13 +168,13 @@ class MainActivity : AppCompatActivity() {
         val code = viewModel.colour.value!!
 
         builder.setView(view)
-            .setPositiveButton("Сохранить") { _, _ ->
+            .setPositiveButton(getString(R.string.save)) { _, _ ->
                 try {
                     val colourName = name.text.toString()
                     val colourHex = hex.text.toString()
 
                     if(colourName == "" || colourName == "")
-                        throw Exception("Заполните все поля!")
+                        throw Exception(getString(R.string.fill_fields))
 
                     val colour = Colour(code, colourHex, colourName)
                     viewModel.insert(colour)
@@ -181,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-            .setNegativeButton("Отмена") {_, _ -> }
+            .setNegativeButton(getString(R.string.cancel)) {_, _ -> }
         return builder.create()
     }
 
@@ -197,13 +199,13 @@ class MainActivity : AppCompatActivity() {
         hex.isEnabled = false
 
         builder.setView(view)
-            .setPositiveButton("Изменить"
+            .setPositiveButton(getString(R.string.edit)
             ) { _, _ ->
                 try {
                     val colourName = name.text.toString()
 
                     if(colourName == "")
-                        throw Exception("Заполните все поля!")
+                        throw Exception(getString(R.string.fill_fields))
 
                     viewModel.edit(colour.code, colourName)
                 } catch (e: Exception) {
@@ -211,20 +213,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .setNeutralButton(
-                "Отмена"
+                getString(R.string.cancel)
             ) { _, _ ->
                 viewModel.insert(colour)
                 (recyclerView.adapter as FavColoursRecyclerAdapter).restoreItem(colour, position)
                 recyclerView.scrollToPosition(position)
             }
             .setNegativeButton(
-                "Удалить"
+                getString(R.string.delete)
             ) {_, _ ->
                 viewModel.delete(colour)
                 Snackbar
-                    .make(recyclerView, "Цвет удалён из избранного.", Snackbar.LENGTH_SHORT)
+                    .make(recyclerView, getString(R.string.colour_deleted), Snackbar.LENGTH_SHORT)
                     .setAction(
-                        "ВЕРНУТЬ"
+                        getString(R.string.cancel)
                     )  {
                         viewModel.insert(colour)
                         (recyclerView.adapter as FavColoursRecyclerAdapter).restoreItem(colour, position)

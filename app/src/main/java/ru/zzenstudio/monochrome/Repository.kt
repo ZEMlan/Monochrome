@@ -1,13 +1,18 @@
-package ru.zemlyanaya.monochrome
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
-import ru.zemlyanaya.monochrome.database.Colour
-import ru.zemlyanaya.monochrome.database.IColourDao
+import ru.zzenstudio.monochrome.database.Colour
+import ru.zzenstudio.monochrome.database.IColourDao
 
 class Repository(private val sharedPrefs: SharedPreferences, private val colourDao: IColourDao){
 
-    fun getLastColour() = sharedPrefs.getInt(COLOUR, 0x000000)
+    fun getLastColour() = sharedPrefs.getInt(COLOUR, 0xFFFFFF)
 
     fun setNewColour(colourCode: Int){
         sharedPrefs.edit().putInt(COLOUR, colourCode).apply()

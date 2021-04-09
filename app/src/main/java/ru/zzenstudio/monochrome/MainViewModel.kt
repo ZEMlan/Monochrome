@@ -1,4 +1,9 @@
-package ru.zemlyanaya.monochrome
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome
 
 import android.app.Application
 import android.preference.PreferenceManager
@@ -9,8 +14,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.zemlyanaya.monochrome.database.AppDatabase
-import ru.zemlyanaya.monochrome.database.Colour
+import ru.zzenstudio.monochrome.database.AppDatabase
+import ru.zzenstudio.monochrome.database.Colour
 import kotlin.coroutines.CoroutineContext
 
 

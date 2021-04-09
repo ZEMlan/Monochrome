@@ -1,4 +1,9 @@
-package ru.zemlyanaya.monochrome.database
+/*
+ * Created by Evgeniya Zemlyanaya (@zzemlyanaya), ZZen Studio
+ *  * Copyright (c) 2021 . All rights reserved.
+ */
+
+package ru.zzenstudio.monochrome.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
